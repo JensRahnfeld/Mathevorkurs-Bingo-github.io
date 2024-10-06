@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bingo Grid</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 10px;
+      height: 100vh;
+      background-color: #f8f9fa;
+    }
+
+    .bingo-container {
+      display: grid;
+      grid-template-columns: repeat(4, 180px);
+      grid-template-rows: repeat(4, 180px);
+      gap: 5px;
+      margin-bottom: 20px;
+    }
+
+    .bingo-cell {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      border: 2px solid #007bff;
+      padding: 2px;
+      background-color: #fff;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .bingo-cell:hover {
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    .randomize-button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+
+    .randomize-button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="bingo-container" id="bingoGrid"></div>
+  <button class="randomize-button" id="randomizeButton">Randomize Grid</button>
+
+  <script>
+    // Array of 16 Bingo Words
+    const bingoWords = [
+    "eine Sprache spricht, die du überhaupt nicht sprichst",
+    "ein Haustier hat",
+    "das gleiche Musikinstrument spielt wie du",
+    "schon einmal an einem Wettbewerb teilgenommen hat",
+    "ein Lieblingsgetränk hat, das du noch nie probiert hast",
+    "den gleichen Lieblingsfilm / Serie hat wie du",
+    "gleich viele Geschwister hat wie du",
+    "eine andere Staatsangehörigkeit hat wie du",
+    "eine Lieblingsjahreszeit hat, die du nicht teilst",
+    "die gleiche Augenfarbe hat wie du",
+    "im gleichen Monat wie du Geburtstag hat",
+    "gerne Ananas isst",
+    "in einem Land war, indem du noch nie warst",
+    "denselben Sport betreibt wie du",
+    "ein Lieblingszitat hat, das sie inspiriert",
+    "im gleichen Stadtteil lebt wie du"
+    ];
+
+    // Function to shuffle the array
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+      }
+    }
+
+    // Function to create the Bingo grid
+    function createBingoGrid(words) {
+      const bingoGrid = document.getElementById('bingoGrid');
+      bingoGrid.innerHTML = ''; // Clear the grid
+      
+      // Loop through the array and create a grid
+      words.forEach(word => {
+        const cell = document.createElement('div');
+        cell.className = 'bingo-cell';
+        cell.textContent = word;
+        bingoGrid.appendChild(cell);
+      });
+    }
+
+    // Initial grid creation
+    createBingoGrid(bingoWords);
+
+    // Add event listener to the button for randomizing the grid
+    const randomizeButton = document.getElementById('randomizeButton');
+    randomizeButton.addEventListener('click', function() {
+      shuffleArray(bingoWords);
+      createBingoGrid(bingoWords);
+    });
+  </script>
+</body>
+</html>
